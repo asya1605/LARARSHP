@@ -28,7 +28,7 @@
     {{-- Form Tambah Role --}}
     <div class="bg-white p-6 rounded-xl shadow-md mb-10 border border-gray-200">
       <h2 class="text-lg font-semibold text-[#002080] mb-4">Tambah / Assign Role ke User</h2>
-      <form action="{{ route('admin.role_user.store') }}" method="POST" class="space-y-5">
+      <form action="{{ route('admin.role-user.store') }}" method="POST" class="space-y-5">
         @csrf
         <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-5">
           <div>
@@ -90,11 +90,11 @@
                     </div>
                     <div class="flex gap-2">
                       @if($role->pivot->status == 0)
-                        <a href="{{ route('admin.role_user.setActive', [$u->iduser, $role->idrole]) }}" class="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded text-xs">Aktifkan</a>
+                        <a href="{{ route('admin.role-user.setActive', [$u->iduser, $role->idrole]) }}" class="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded text-xs">Aktifkan</a>
                       @else
-                        <a href="{{ route('admin.role_user.deactivate', [$u->iduser, $role->idrole]) }}" class="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1 rounded text-xs">Nonaktifkan</a>
+                        <a href="{{ route('admin.role-user.deactivate', [$u->iduser, $role->idrole]) }}" class="bg-gray-600 hover:bg-gray-700 text-white px-2 py-1 rounded text-xs">Nonaktifkan</a>
                       @endif
-                      <a href="{{ route('admin.role_user.destroy', [$u->iduser, $role->idrole]) }}" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs">Hapus</a>
+                      <a href="{{ route('admin.role-user.destroy', [$u->iduser, $role->idrole]) }}" class="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs">Hapus</a>
                     </div>
                   </div>
                 @empty

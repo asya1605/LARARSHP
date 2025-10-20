@@ -13,14 +13,14 @@ class RekamMedisController extends Controller
     public function index()
     {
         $data = RekamMedis::with(['pet.pemilik', 'dokter'])->orderByDesc('created_at')->get();
-        return view('dashboard.admin.rekam_medis.index', compact('data'));
+        return view('dashboard.admin.rekam-medis.index', compact('data'));
     }
 
     public function create()
     {
         $pet = Pet::all();
         $dokter = User::where('idrole', 3)->get(); // misal idrole=3 adalah dokter
-        return view('dashboard.admin.rekam_medis.create', compact('pet', 'dokter'));
+        return view('dashboard.admin.rekam-medis.create', compact('pet', 'dokter'));
     }
 
     public function store(Request $request)
@@ -36,7 +36,7 @@ class RekamMedisController extends Controller
 
         RekamMedis::create($request->all() + ['created_at' => now()]);
 
-        return redirect()->route('admin.rekam_medis.index')->with('success', 'Rekam medis berhasil ditambahkan.');
+        return redirect()->route('admin.rekam-medis.index')->with('success', 'Rekam medis berhasil ditambahkan.');
     }
 
     public function edit($id)
@@ -45,7 +45,7 @@ class RekamMedisController extends Controller
         $pet = Pet::all();
         $dokter = User::where('idrole', 3)->get();
 
-        return view('dashboard.admin.rekam_medis.edit', compact('item', 'pet', 'dokter'));
+        return view('dashboard.admin.rekam-medis.edit', compact('item', 'pet', 'dokter'));
     }
 
     public function update(Request $request, $id)
@@ -62,12 +62,12 @@ class RekamMedisController extends Controller
         ]);
 
         $item->update($request->all());
-        return redirect()->route('admin.rekam_medis.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('admin.rekam-medis.index')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
         RekamMedis::destroy($id);
-        return redirect()->route('admin.rekam_medis.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('admin.rekam-medis.index')->with('success', 'Data berhasil dihapus.');
     }
 }

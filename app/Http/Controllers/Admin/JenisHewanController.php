@@ -12,12 +12,12 @@ class JenisHewanController extends Controller
     public function index()
     {
         $list = JenisHewan::orderBy('nama_jenis_hewan')->get();
-        return view('dashboard.admin.jenis_hewan.index', compact('list'));
+        return view('dashboard.admin.jenis-hewan.index', compact('list'));
     }
 
     public function create()
     {
-        return view('dashboard.admin.jenis_hewan.create');
+        return view('dashboard.admin.jenis-hewan.create');
     }
 
     public function store(Request $request)
@@ -30,14 +30,14 @@ class JenisHewanController extends Controller
             'nama_jenis_hewan' => $request->nama_jenis_hewan
         ]);
 
-        return redirect()->route('admin.jenis_hewan.index')
+        return redirect()->route('admin.jenis-hewan.index')
                          ->with('success', 'Jenis hewan berhasil ditambahkan.');
     }
 
     public function edit($id)
     {
         $jenis = JenisHewan::findOrFail($id);
-        return view('dashboard.admin.jenis_hewan.edit', compact('jenis'));
+        return view('dashboard.admin.jenis-hewan.edit', compact('jenis'));
     }
 
     public function update(Request $request, $id)
@@ -50,7 +50,7 @@ class JenisHewanController extends Controller
             'nama_jenis_hewan' => $request->nama_jenis_hewan
         ]);
 
-        return redirect()->route('admin.jenis_hewan.index')
+        return redirect()->route('admin.jenis-hewan.index')
                          ->with('success', 'Jenis hewan berhasil diperbarui.');
     }
 
@@ -58,13 +58,13 @@ class JenisHewanController extends Controller
     {
         $used = DB::table('ras_hewan')->where('idjenis_hewan', $id)->exists();
         if ($used) {
-            return redirect()->route('admin.jenis_hewan.index')
+            return redirect()->route('admin.jenis-hewan.index')
                              ->with('danger', 'Tidak dapat dihapus: masih digunakan pada tabel ras.');
         }
 
         JenisHewan::where('idjenis_hewan', $id)->delete();
 
-        return redirect()->route('admin.jenis_hewan.index')
+        return redirect()->route('admin.jenis-hewan.index')
                          ->with('success', 'Jenis hewan berhasil dihapus.');
     }
 }

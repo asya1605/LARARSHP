@@ -27,7 +27,7 @@
 
     {{-- Tombol tambah --}}
     <div class="flex justify-end mb-6">
-      <a href="{{ route('admin.ras_hewan.create') }}" class="bg-[#002080] hover:bg-[#00185e] text-white px-5 py-2 rounded-lg text-sm font-semibold transition">
+      <a href="{{ route('admin.ras-hewan.create') }}" class="bg-[#002080] hover:bg-[#00185e] text-white px-5 py-2 rounded-lg text-sm font-semibold transition">
         ➕ Tambah Ras Hewan
       </a>
     </div>
@@ -58,8 +58,8 @@
                 <td class="py-3 px-4">{{ $r->nama_jenis_hewan }}</td>
                 <td class="py-3 px-4">{{ $r->nama_ras }}</td>
                 <td class="py-3 px-4 text-center">
-                  <a href="{{ route('admin.ras_hewan.edit', $r->idras_hewan) }}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-xs">✏️ Edit</a>
-                  <a href="{{ route('admin.ras_hewan.destroy', $r->idras_hewan) }}"
+                  <a href="{{ route('admin.ras-hewan.edit', $r->idras_hewan) }}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-xs">✏️ Edit</a>
+                  <a href="{{ route('admin.ras-hewan.destroy', $r->idras_hewan) }}"
                      onclick="return confirm('Yakin ingin menghapus ras ini?')"
                      class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs">🗑️ Hapus</a>
                 </td>

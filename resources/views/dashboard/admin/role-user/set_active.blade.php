@@ -10,7 +10,7 @@
       Apakah kamu yakin ingin menjadikan role ini sebagai <strong class="text-[#002080]">aktif</strong> untuk user ini?
     </p>
 
-    <form method="POST" action="{{ route('admin.role_user.setActiveConfirm') }}" class="text-center">
+    <form method="POST" action="{{ route('admin.role-user.setActiveConfirm') }}" class="text-center">
       @csrf
       <input type="hidden" name="iduser" value="{{ $iduser }}">
       <input type="hidden" name="idrole" value="{{ $idrole }}">
@@ -18,7 +18,7 @@
         <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition text-sm font-medium">
           ✅ Ya, Jadikan Aktif
         </button>
-        <a href="{{ route('admin.role_user.index') }}" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition text-sm">
+        <a href="{{ route('admin.role-user.index') }}" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition text-sm">
           Batal
         </a>
       </div>

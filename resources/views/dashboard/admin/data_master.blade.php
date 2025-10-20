@@ -35,64 +35,67 @@
         [
         'title' => 'Data User',
         'img'   => 'https://cdn-icons-png.flaticon.com/128/3135/3135715.png',
-        'url'   => route('admin.data_user.index'),
+        'url'   => route('admin.data-user.index'),
         ],
         [
         'title' => 'Manajemen Role',
         'img'   => 'https://cdn-icons-png.flaticon.com/128/10691/10691841.png',
-        'url'   =>  route('admin.role_user.index'),
+        'url'   => route('admin.role-user.index'),
         ],
         [
         'title' => 'Jenis Hewan',
         'img'   => 'https://cdn-icons-png.flaticon.com/128/5312/5312800.png',
-        'url'   =>  route('admin.jenis_hewan.index'),
+        'url'   => route('admin.jenis-hewan.index'),
         ],
         [
         'title' => 'Ras Hewan',
         'img'   => 'https://cdn-icons-png.flaticon.com/128/672/672716.png',
-        'url'   =>  route('admin.ras_hewan.index'),
+        'url'   => route('admin.ras-hewan.index'),
         ],
         [
         'title' => 'Data Pemilik',
         'img'   => 'https://cdn-icons-png.flaticon.com/128/1256/1256650.png',
-        'url'   =>  route('admin.pemilik.index'),
+        'url'   => route('admin.pemilik.index'),
         ],
         [
         'title' => 'Data Pet',
         'img'   => 'https://cdn-icons-png.flaticon.com/128/1807/1807570.png',
-        'url'   =>  route('admin.pet.index'),
+        'url'   => route('admin.pet.index'),
         ],
         [
         'title' => 'Data Kategori',
         'img'   => 'https://cdn-icons-png.flaticon.com/128/15302/15302080.png',
-        'url'   =>  route('admin.kategori.index'),
+        'url'   => route('admin.kategori.index'),
         ],
         [
         'title' => 'Data Kategori Klinis',
         'img'   => 'https://cdn-icons-png.flaticon.com/128/13637/13637200.png',
-        'url'   =>  route('admin.kategori_klinis.index'),
+        'url'   => route('admin.kategori-klinis.index'),
         ],
         [
         'title' => 'Data Kode Tindakan Terapi',
         'img'   => 'https://cdn-icons-png.flaticon.com/128/15887/15887652.png',
-        'url'   =>  route('admin.kode_tindakan_terapi.index'),
+        'url'   => route('admin.kode-tindakan-terapi.index'),
         ],
         [
         'title' => 'Data Rekam Medis',
         'img'   => 'https://cdn-icons-png.flaticon.com/128/15887/15887652.png',
-        'url'   =>  '#',
+        'url'   => route('admin.rekam-medis.index'),
         ],
     ];
     @endphp
 
     @foreach ($data as $item)
-    <a href="{{ $item['url'] }}" class="group bg-white shadow-sm border border-gray-100 rounded-2xl p-6 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 block">
-    <div class="flex justify-center mb-4">
+    <a href="{{ $item['url'] }}" 
+       class="group bg-white shadow-sm border border-gray-100 rounded-2xl p-6 text-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 block">
+      <div class="flex justify-center mb-4">
         <div class="bg-[#002080]/10 rounded-full p-4 group-hover:bg-[#002080]/20 transition">
-        <img src="{{ $item['img'] }}" alt="{{ $item['title'] }}" class="w-12 h-12 object-contain">
+          <img src="{{ $item['img'] }}" alt="{{ $item['title'] }}" class="w-12 h-12 object-contain">
         </div>
-    </div>
-    <h4 class="font-semibold text-[#002080] text-sm group-hover:text-[#00185e] transition">{{ $item['title'] }}</h4>
+      </div>
+      <h4 class="font-semibold text-[#002080] text-sm group-hover:text-[#00185e] transition">
+        {{ $item['title'] }}
+      </h4>
     </a>
     @endforeach
   </div>

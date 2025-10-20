@@ -17,7 +17,7 @@
       </div>
     @endif
 
-    <form action="{{ route('admin.data_user.store') }}" method="POST" class="space-y-4">
+    <form action="{{ route('admin.data-user.store') }}" method="POST" class="space-y-4">
       @csrf
       <div>
         <label class="block text-sm font-semibold mb-1">Nama</label>
@@ -37,7 +37,7 @@
       </div>
       <div class="flex justify-between items-center mt-6">
         <button class="bg-[#002080] text-white px-5 py-2 rounded-lg hover:bg-[#00185e] transition">Simpan</button>
-        <a href="{{ route('admin.data_user.index') }}" class="text-gray-600 hover:underline">Batal</a>
+        <a href="{{ route('admin.data-user.index') }}" class="text-gray-600 hover:underline">Batal</a>
       </div>
     </form>
   </div>

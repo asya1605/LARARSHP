@@ -13,14 +13,14 @@ class KodeTindakanTerapiController extends Controller
     public function index()
     {
         $data = KodeTindakanTerapi::with(['kategori', 'kategoriKlinis'])->get();
-        return view('dashboard.admin.kode_tindakan_terapi.index', compact('data'));
+        return view('dashboard.admin.kode-tindakan-terapi.index', compact('data'));
     }
 
     public function create()
     {
         $kategori = Kategori::all();
         $kategori_klinis = KategoriKlinis::all();
-        return view('dashboard.admin.kode_tindakan_terapi.create', compact('kategori', 'kategori_klinis'));
+        return view('dashboard.admin.kode-tindakan-terapi.create', compact('kategori', 'kategori_klinis'));
     }
 
     public function store(Request $request)
@@ -34,7 +34,7 @@ class KodeTindakanTerapiController extends Controller
 
         KodeTindakanTerapi::create($request->all());
 
-        return redirect()->route('admin.kode_tindakan.index')->with('success', 'Data berhasil ditambahkan!');
+        return redirect()->route('admin.kode-tindakan-terapi.index')->with('success', 'Data berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -43,7 +43,7 @@ class KodeTindakanTerapiController extends Controller
         $kategori = Kategori::all();
         $kategori_klinis = KategoriKlinis::all();
 
-        return view('dashboard.admin.kode_tindakan_terapi.edit', compact('item', 'kategori', 'kategori_klinis'));
+        return view('dashboard.admin.kode-tindakan-terapi.edit', compact('item', 'kategori', 'kategori_klinis'));
     }
 
     public function update(Request $request, $id)
@@ -58,12 +58,12 @@ class KodeTindakanTerapiController extends Controller
         ]);
 
         $item->update($request->all());
-        return redirect()->route('admin.kode_tindakan.index')->with('success', 'Data berhasil diperbarui.');
+        return redirect()->route('admin.kode-tindakan-terapi.index')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
         KodeTindakanTerapi::destroy($id);
-        return redirect()->route('admin.kode_tindakan.index')->with('success', 'Data berhasil dihapus.');
+        return redirect()->route('admin.kode-tindakan-terapi.index')->with('success', 'Data berhasil dihapus.');
     }
 }

@@ -17,13 +17,13 @@ class RasHewanController extends Controller
                     ->orderBy('nama_ras')
                     ->get();
 
-        return view('dashboard.admin.ras_hewan.index', compact('rasList'));
+        return view('dashboard.admin.ras-hewan.index', compact('rasList'));
     }
 
     public function create()
     {
         $jenisList = JenisHewan::orderBy('nama_jenis_hewan')->get();
-        return view('dashboard.admin.ras_hewan.create', compact('jenisList'));
+        return view('dashboard.admin.ras-hewan.create', compact('jenisList'));
     }
 
     public function store(Request $request)
@@ -38,7 +38,7 @@ class RasHewanController extends Controller
             'idjenis_hewan' => $request->idjenis_hewan,
         ]);
 
-        return redirect()->route('admin.ras_hewan.index')
+        return redirect()->route('admin.ras-hewan.index')
                          ->with('success', 'Ras hewan berhasil ditambahkan.');
     }
 
@@ -46,7 +46,7 @@ class RasHewanController extends Controller
     {
         $ras = RasHewan::findOrFail($id);
         $jenisList = JenisHewan::orderBy('nama_jenis_hewan')->get();
-        return view('dashboard.admin.ras_hewan.edit', compact('ras', 'jenisList'));
+        return view('dashboard.admin.ras-hewan.edit', compact('ras', 'jenisList'));
     }
 
     public function update(Request $request, $id)
@@ -61,7 +61,7 @@ class RasHewanController extends Controller
             'idjenis_hewan' => $request->idjenis_hewan,
         ]);
 
-        return redirect()->route('admin.ras_hewan.index')
+        return redirect()->route('admin.ras-hewan.index')
                          ->with('success', 'Data ras hewan berhasil diperbarui.');
     }
 
@@ -69,12 +69,12 @@ class RasHewanController extends Controller
     {
         $used = DB::table('pet')->where('idras_hewan', $id)->exists();
         if ($used) {
-            return redirect()->route('admin.ras_hewan.index')
+            return redirect()->route('admin.ras-hewan.index')
                              ->with('danger', 'Tidak dapat menghapus ras: masih digunakan pada data hewan.');
         }
 
         RasHewan::where('idras_hewan', $id)->delete();
-        return redirect()->route('admin.ras_hewan.index')
+        return redirect()->route('admin.ras-hewan.index')
                          ->with('success', 'Ras hewan berhasil dihapus.');
     }
 }

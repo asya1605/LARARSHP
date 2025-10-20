@@ -10,6 +10,10 @@ use App\Http\Controllers\Admin\JenisHewanController;
 use App\Http\Controllers\Admin\RasHewanController;
 use App\Http\Controllers\Admin\PemilikController;
 use App\Http\Controllers\Admin\PetController;
+use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\KategoriKlinisController;    
+use App\Http\Controllers\Admin\KodeTindakanTerapiController;
+use App\Http\Controllers\Admin\RekamMedisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +57,7 @@ Route::prefix('dashboard')->group(function () {
 // =====================================================
 
 // ✅ Data User
-Route::prefix('admin/data-user')->name('admin.data_user.')->group(function () {
+Route::prefix('admin/data-user')->name('admin.data-user.')->group(function () {
     Route::get('/', [DataUserController::class, 'index'])->name('index');
     Route::get('/create', [DataUserController::class, 'create'])->name('create');
     Route::post('/store', [DataUserController::class, 'store'])->name('store');
@@ -63,7 +67,7 @@ Route::prefix('admin/data-user')->name('admin.data_user.')->group(function () {
 });
 
 // ✅ Role User
-Route::prefix('admin/manajemen-role')->name('admin.role_user.')->group(function () {
+Route::prefix('admin/manajemen-role')->name('admin.role-user.')->group(function () {
     Route::get('/', [RoleUserController::class, 'index'])->name('index');
     Route::post('/store', [RoleUserController::class, 'store'])->name('store');
     Route::get('/set-active/{iduser}/{idrole}', [RoleUserController::class, 'setActive'])->name('setActive');
@@ -72,7 +76,7 @@ Route::prefix('admin/manajemen-role')->name('admin.role_user.')->group(function 
 });
 
 // ✅ Jenis Hewan
-Route::prefix('admin/jenis-hewan')->name('admin.jenis_hewan.')->group(function () {
+Route::prefix('admin/jenis-hewan')->name('admin.jenis-hewan.')->group(function () {
     Route::get('/', [JenisHewanController::class, 'index'])->name('index');
     Route::get('/create', [JenisHewanController::class, 'create'])->name('create');
     Route::post('/store', [JenisHewanController::class, 'store'])->name('store');
@@ -82,7 +86,7 @@ Route::prefix('admin/jenis-hewan')->name('admin.jenis_hewan.')->group(function (
 });
 
 // ✅ Ras Hewan
-Route::prefix('admin/ras-hewan')->name('admin.ras_hewan.')->group(function () {
+Route::prefix('admin/ras-hewan')->name('admin.ras-hewan.')->group(function () {
     Route::get('/', [RasHewanController::class, 'index'])->name('index');
     Route::get('/create', [RasHewanController::class, 'create'])->name('create');
     Route::post('/store', [RasHewanController::class, 'store'])->name('store');
@@ -113,24 +117,42 @@ Route::prefix('admin/pet')->name('admin.pet.')->group(function () {
 
 // Data Kategori
 Route::prefix('admin/kategori')->name('admin.kategori.')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Admin\KategoriController::class, 'index'])->name('index');
-    Route::get('/create', [\App\Http\Controllers\Admin\KategoriController::class, 'create'])->name('create');
-    Route::post('/store', [\App\Http\Controllers\Admin\KategoriController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [\App\Http\Controllers\Admin\KategoriController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [\App\Http\Controllers\Admin\KategoriController::class, 'update'])->name('update');
-    Route::get('/destroy/{id}', [\App\Http\Controllers\Admin\KategoriController::class, 'destroy'])->name('destroy');
+    Route::get('/', [KategoriController::class, 'index'])->name('index');
+    Route::get('/create', [KategoriController::class, 'create'])->name('create');
+    Route::post('/store', [KategoriController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [KategoriController::class, 'edit'])->name('edit');
+    Route::post('/update/{id}', [KategoriController::class, 'update'])->name('update');
+    Route::get('/destroy/{id}', [KategoriController::class, 'destroy'])->name('destroy');
 });
 
 // Data Kategori Klinis
-Route::prefix('admin/kategori-klinis')->name('admin.kategori_klinis.')->group(function () {
-    Route::get('/', [\App\Http\Controllers\Admin\KategoriKlinisController::class, 'index'])->name('index');
-    Route::get('/create', [\App\Http\Controllers\Admin\KategoriKlinisController::class, 'create'])->name('create');
-    Route::post('/store', [\App\Http\Controllers\Admin\KategoriKlinisController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [\App\Http\Controllers\Admin\KategoriKlinisController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [\App\Http\Controllers\Admin\KategoriKlinisController::class, 'update'])->name('update');
-    Route::get('/destroy/{id}', [\App\Http\Controllers\Admin\KategoriKlinisController::class, 'destroy'])->name('destroy');
+Route::prefix('admin/kategori-klinis')->name('admin.kategori-klinis.')->group(function () {
+    Route::get('/', [KategoriKlinisController::class, 'index'])->name('index');
+    Route::get('/create', [KategoriKlinisController::class, 'create'])->name('create');
+    Route::post('/store', [KategoriKlinisController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [KategoriKlinisController::class, 'edit'])->name('edit');
+    Route::post('/update/{id}', [KategoriKlinisController::class, 'update'])->name('update');
+    Route::get('/destroy/{id}', [KategoriKlinisController::class, 'destroy'])->name('destroy');
 });
 
+Route::prefix('admin/kode-tindakan-terapi')->name('admin.kode-tindakan-terapi.')->group(function () {
+    Route::get('/', [KodeTindakanTerapiController::class, 'index'])->name('index');
+    Route::get('/create', [KodeTindakanTerapiController::class, 'create'])->name('create');
+    Route::post('/store', [KodeTindakanTerapiController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [KodeTindakanTerapiController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [KodeTindakanTerapiController::class, 'update'])->name('update');
+    Route::delete('/{id}', [KodeTindakanTerapiController::class, 'destroy'])->name('destroy');
+});
+
+    // --- Data Master: Rekam Medis ---
+Route::prefix('admin/rekam-medis')->name('admin.rekam-medis.')->group(function () {
+    Route::get('/', [RekamMedisController::class, 'index'])->name('index');
+    Route::get('/create', [RekamMedisController::class, 'create'])->name('create');
+    Route::post('/store', [RekamMedisController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [RekamMedisController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [RekamMedisController::class, 'update'])->name('update');
+    Route::delete('/{id}', [RekamMedisController::class, 'destroy'])->name('destroy');
+});
 
 // 🔹 Cek koneksi database & data
 Route::get('/cek-koneksi', [CekKoneksiController::class, 'index'])->name('cek.koneksi');

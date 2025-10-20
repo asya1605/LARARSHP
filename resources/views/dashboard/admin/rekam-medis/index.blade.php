@@ -22,7 +22,7 @@
     @endif
 
     <div class="flex justify-end mb-5">
-      <a href="{{ route('admin.rekam_medis.create') }}" 
+      <a href="{{ route('admin.rekam-medis.create') }}" 
          class="bg-[#002080] hover:bg-[#00185e] text-white px-5 py-2 rounded-lg text-sm font-medium">
         ➕ Tambah Rekam Medis
       </a>
@@ -49,9 +49,9 @@
               <td class="py-3 px-4">{{ $item->dokter->username ?? '-' }}</td>
               <td class="py-3 px-4">{{ $item->diagnosa ?? '-' }}</td>
               <td class="py-3 px-4 text-center">
-                <a href="{{ route('admin.rekam_medis.edit', $item->idrekam_medis) }}" 
+                <a href="{{ route('admin.rekam-medis.edit', $item->idrekam_medis) }}" 
                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs mr-2">Ubah</a>
-                <form action="{{ route('admin.rekam_medis.destroy', $item->idrekam_medis) }}" 
+                <form action="{{ route('admin.rekam-medis.destroy', $item->idrekam_medis) }}" 
                       method="POST" class="inline-block"
                       onsubmit="return confirm('Yakin ingin menghapus rekam medis ini?')">
                   @csrf

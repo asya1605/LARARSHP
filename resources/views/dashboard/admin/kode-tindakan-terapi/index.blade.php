@@ -22,7 +22,7 @@
     @endif
 
     <div class="flex justify-end mb-5">
-      <a href="{{ route('admin.kode_tindakan.create') }}" 
+      <a href="{{ route('admin.kode-tindakan-terapi.create') }}" 
          class="bg-[#002080] hover:bg-[#00185e] text-white px-5 py-2 rounded-lg text-sm font-medium">
         ➕ Tambah Kode Tindakan
       </a>
@@ -47,9 +47,9 @@
               <td class="py-3 px-4">{{ $item->kategori->nama_kategori ?? '-' }}</td>
               <td class="py-3 px-4">{{ $item->kategoriKlinis->nama_kategori_klinis ?? '-' }}</td>
               <td class="py-3 px-4 text-center">
-                <a href="{{ route('admin.kode_tindakan.edit', $item->idkode_tindakan_terapi) }}" 
+                <a href="{{ route('admin.kode-tindakan-terapi.edit', $item->idkode_tindakan_terapi) }}" 
                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs mr-2">Ubah</a>
-                <form action="{{ route('admin.kode_tindakan.destroy', $item->idkode_tindakan_terapi) }}" 
+                <form action="{{ route('admin.kode-tindakan-terapi.destroy', $item->idkode_tindakan_terapi) }}" 
                       method="POST" class="inline-block"
                       onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                   @csrf

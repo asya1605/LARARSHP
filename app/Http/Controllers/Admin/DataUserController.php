@@ -13,13 +13,13 @@ class DataUserController extends Controller
     public function index()
     {
         $users = DB::table('user')->get(); // ambil semua user
-        return view('dashboard.admin.data_user.index', compact('users'));
+        return view('dashboard.admin.data-user.index', compact('users'));
     }
 
     /** Form tambah user baru */
     public function create()
     {
-        return view('dashboard.admin.data_user.create');
+        return view('dashboard.admin.data-user.create');
     }
 
     /** Simpan user baru */
@@ -37,7 +37,7 @@ class DataUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('admin.data_user.index')->with('success', 'User berhasil ditambahkan!');
+        return redirect()->route('admin.data-user.index')->with('success', 'User berhasil ditambahkan!');
     }
 
     /** Form edit user */
@@ -45,9 +45,9 @@ class DataUserController extends Controller
     {
         $user = DB::table('user')->where('iduser', $id)->first();
         if (!$user) {
-            return redirect()->route('admin.data_user.index')->with('error', 'User tidak ditemukan');
+            return redirect()->route('admin.data-user.index')->with('error', 'User tidak ditemukan');
         }
-        return view('dashboard.admin.data_user.edit', compact('user'));
+        return view('dashboard.admin.data-user.edit', compact('user'));
     }
 
     /** Update nama user */
@@ -61,7 +61,7 @@ class DataUserController extends Controller
             'nama' => $request->nama,
         ]);
 
-        return redirect()->route('admin.data_user.index')->with('success', 'Nama user berhasil diperbarui!');
+        return redirect()->route('admin.data-user.index')->with('success', 'Nama user berhasil diperbarui!');
     }
 
     /** Reset password user */
@@ -69,13 +69,13 @@ class DataUserController extends Controller
     {
         $user = DB::table('user')->where('iduser', $id)->first();
         if (!$user) {
-            return redirect()->route('admin.data_user.index')->with('error', 'User tidak ditemukan');
+            return redirect()->route('admin.data-user.index')->with('error', 'User tidak ditemukan');
         }
 
         DB::table('user')->where('iduser', $id)->update([
             'password' => Hash::make('123456'),
         ]);
 
-        return redirect()->route('admin.data_user.index')->with('success', 'Password berhasil direset menjadi 123456');
+        return redirect()->route('admin.data-user.index')->with('success', 'Password berhasil direset menjadi 123456');
     }
 }

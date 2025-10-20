@@ -15,12 +15,12 @@ class KategoriKlinisController extends Controller
             ->orderBy('nama_kategori_klinis')
             ->get();
 
-        return view('dashboard.admin.kategori_klinis.index', compact('kategoriList'));
+        return view('dashboard.admin.kategori-klinis.index', compact('kategoriList'));
     }
 
     public function create()
     {
-        return view('dashboard.admin.kategori_klinis.create');
+        return view('dashboard.admin.kategori-klinis.create');
     }
 
     public function store(Request $request)
@@ -33,17 +33,17 @@ class KategoriKlinisController extends Controller
             'nama_kategori_klinis' => $request->nama_kategori_klinis,
         ]);
 
-        return redirect()->route('admin.kategori_klinis.index')->with('success', 'Kategori Klinis berhasil ditambahkan!');
+        return redirect()->route('admin.kategori-klinis.index')->with('success', 'Kategori Klinis berhasil ditambahkan!');
     }
 
     public function edit($id)
     {
         $kategori = DB::table('kategori_klinis')->where('idkategori_klinis', $id)->first();
         if (!$kategori) {
-            return redirect()->route('admin.kategori_klinis.index')->with('danger', 'Data tidak ditemukan.');
+            return redirect()->route('admin.kategori-klinis.index')->with('danger', 'Data tidak ditemukan.');
         }
 
-        return view('dashboard.admin.kategori_klinis.edit', compact('kategori'));
+        return view('dashboard.admin.kategori-klinis.edit', compact('kategori'));
     }
 
     public function update(Request $request, $id)
@@ -56,12 +56,12 @@ class KategoriKlinisController extends Controller
             'nama_kategori_klinis' => $request->nama_kategori_klinis,
         ]);
 
-        return redirect()->route('admin.kategori_klinis.index')->with('success', 'Kategori Klinis berhasil diperbarui!');
+        return redirect()->route('admin.kategori-klinis.index')->with('success', 'Kategori Klinis berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         DB::table('kategori_klinis')->where('idkategori_klinis', $id)->delete();
-        return redirect()->route('admin.kategori_klinis.index')->with('success', 'Kategori Klinis berhasil dihapus!');
+        return redirect()->route('admin.kategori-klinis.index')->with('success', 'Kategori Klinis berhasil dihapus!');
     }
 }

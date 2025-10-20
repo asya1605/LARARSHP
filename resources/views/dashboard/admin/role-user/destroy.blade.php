@@ -10,7 +10,7 @@
       Apakah kamu yakin ingin <strong class="text-red-600">menonaktifkan</strong> role ini untuk user?
     </p>
 
-    <form method="POST" action="{{ route('admin.role_user.deactivateConfirm') }}" class="text-center">
+    <form method="POST" action="{{ route('admin.role-user.deactivateConfirm') }}" class="text-center">
       @csrf
       <input type="hidden" name="iduser" value="{{ $iduser }}">
       <input type="hidden" name="idrole" value="{{ $idrole }}">
@@ -18,7 +18,7 @@
         <button type="submit" class="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-lg transition text-sm font-medium">
           📴 Nonaktifkan
         </button>
-        <a href="{{ route('admin.role_user.index') }}" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition text-sm">
+        <a href="{{ route('admin.role-user.index') }}" class="bg-gray-400 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition text-sm">
           Batal
         </a>
       </div>

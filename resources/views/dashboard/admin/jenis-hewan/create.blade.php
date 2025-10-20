@@ -17,13 +17,13 @@
       </div>
     @endif
 
-    <form method="POST" action="{{ route('admin.jenis_hewan.store') }}" class="space-y-4">
+    <form method="POST" action="{{ route('admin.jenis-hewan.store') }}" class="space-y-4">
       @csrf
       <input type="text" name="nama_jenis_hewan" placeholder="contoh: Kucing / Anjing / Kelinci"
              class="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-[#002080]/30" required>
 
       <div class="flex justify-between">
-        <a href="{{ route('admin.jenis_hewan.index') }}" class="text-gray-600 hover:text-gray-800 text-sm">← Kembali</a>
+        <a href="{{ route('admin.jenis-hewan.index') }}" class="text-gray-600 hover:text-gray-800 text-sm">← Kembali</a>
         <button type="submit" class="bg-[#002080] hover:bg-[#00185e] text-white px-4 py-2 rounded text-sm font-medium">
           Simpan
         </button>

@@ -25,7 +25,7 @@ class RasHewanController extends Controller
             ->orderBy('ras_hewan.nama_ras')
             ->get();
 
-        return view('dashboard.admin.ras_hewan.index', compact('rasList'));
+        return view('dashboard.admin.ras-hewan.index', compact('rasList'));
     }
 
     /**
@@ -34,7 +34,7 @@ class RasHewanController extends Controller
     public function create()
     {
         $jenisList = DB::table('jenis_hewan')->orderBy('nama_jenis_hewan')->get();
-        return view('dashboard.admin.ras_hewan.create', compact('jenisList'));
+        return view('dashboard.admin.ras-hewan.create', compact('jenisList'));
     }
 
     /**
@@ -53,7 +53,7 @@ class RasHewanController extends Controller
         ]);
 
         return redirect()
-            ->route('admin.ras_hewan.index')
+            ->route('admin.ras-hewan.index')
             ->with('success', '✅ Ras hewan berhasil ditambahkan!');
     }
 
@@ -67,11 +67,11 @@ class RasHewanController extends Controller
 
         if (!$ras) {
             return redirect()
-                ->route('admin.ras_hewan.index')
+                ->route('admin.ras-hewan.index')
                 ->with('danger', '❌ Data ras tidak ditemukan.');
         }
 
-        return view('dashboard.admin.ras_hewan.edit', compact('ras', 'jenisList'));
+        return view('dashboard.admin.ras-hewan.edit', compact('ras', 'jenisList'));
     }
 
     /**
@@ -92,7 +92,7 @@ class RasHewanController extends Controller
             ]);
 
         return redirect()
-            ->route('admin.ras_hewan.index')
+            ->route('admin.ras-hewan.index')
             ->with('success', '✅ Data ras hewan berhasil diperbarui!');
     }
 
@@ -105,11 +105,11 @@ class RasHewanController extends Controller
 
         if ($deleted) {
             return redirect()
-                ->route('admin.ras_hewan.index')
+                ->route('admin.ras-hewan.index')
                 ->with('success', '🗑️ Ras hewan berhasil dihapus!');
         } else {
             return redirect()
-                ->route('admin.ras_hewan.index')
+                ->route('admin.ras-hewan.index')
                 ->with('danger', '❌ Gagal menghapus ras hewan.');
         }
     }

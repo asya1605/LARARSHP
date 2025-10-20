@@ -32,7 +32,7 @@
     @endforeach
 
     <div class="flex justify-end mb-4">
-      <a href="{{ route('admin.jenis_hewan.create') }}"
+      <a href="{{ route('admin.jenis-hewan.create') }}"
          class="bg-[#002080] hover:bg-[#00185e] text-white px-5 py-2 rounded-lg text-sm font-medium">
          ➕ Tambah Jenis
       </a>
@@ -53,9 +53,9 @@
               <td class="py-3 px-4">{{ $j->idjenis_hewan }}</td>
               <td class="py-3 px-4 font-medium text-gray-800">{{ $j->nama_jenis_hewan }}</td>
               <td class="py-3 px-4 text-center">
-                <a href="{{ route('admin.jenis_hewan.edit', $j->idjenis_hewan) }}"
+                <a href="{{ route('admin.jenis-hewan.edit', $j->idjenis_hewan) }}"
                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs mr-2">Ubah</a>
-                <a href="{{ route('admin.jenis_hewan.destroy', $j->idjenis_hewan) }}"
+                <a href="{{ route('admin.jenis-hewan.destroy', $j->idjenis_hewan) }}"
                    onclick="return confirm('Yakin ingin menghapus jenis ini?')"
                    class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs">Hapus</a>
               </td>

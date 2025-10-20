@@ -34,7 +34,7 @@
     @endforeach
 
     <div class="flex justify-end mb-5">
-      <a href="{{ route('admin.kategori_klinis.create') }}" class="bg-[#002080] hover:bg-[#00185e] text-white px-5 py-2 rounded-lg text-sm font-semibold">➕ Tambah Kategori Klinis</a>
+      <a href="{{ route('admin.kategori-klinis.create') }}" class="bg-[#002080] hover:bg-[#00185e] text-white px-5 py-2 rounded-lg text-sm font-semibold">➕ Tambah Kategori Klinis</a>
     </div>
 
     <div class="overflow-x-auto bg-white rounded-xl shadow-md border border-gray-200">
@@ -52,8 +52,8 @@
               <td class="py-3 px-4">{{ $k->idkategori_klinis }}</td>
               <td class="py-3 px-4">{{ $k->nama_kategori_klinis }}</td>
               <td class="py-3 px-4 text-center">
-                <a href="{{ route('admin.kategori_klinis.edit', $k->idkategori_klinis) }}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-xs">✏️ Edit</a>
-                <a href="{{ route('admin.kategori_klinis.destroy', $k->idkategori_klinis) }}" onclick="return confirm('Hapus kategori klinis ini?')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs">🗑️ Hapus</a>
+                <a href="{{ route('admin.kategori-klinis.edit', $k->idkategori_klinis) }}" class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-xs">✏️ Edit</a>
+                <a href="{{ route('admin.kategori-klinis.destroy', $k->idkategori_klinis) }}" onclick="return confirm('Hapus kategori klinis ini?')" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs">🗑️ Hapus</a>
               </td>
             </tr>
           @empty

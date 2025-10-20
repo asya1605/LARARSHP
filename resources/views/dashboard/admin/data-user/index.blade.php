@@ -37,7 +37,7 @@
 
     {{-- Action bar --}}
     <div class="mb-6 flex flex-col sm:flex-row justify-between gap-4">
-      <a href="{{ route('admin.data_user.create') }}"
+      <a href="{{ route('admin.data-user.create') }}"
          class="bg-[#002080] hover:bg-[#00185e] text-white px-5 py-2 rounded-lg shadow transition text-sm font-medium">
          + Tambah User
       </a>
@@ -63,8 +63,8 @@
               <td class="py-2 px-4">{{ $u->nama }}</td>
               <td class="py-2 px-4">{{ $u->email }}</td>
               <td class="py-2 px-4 text-center">
-                <a href="{{ route('admin.data_user.edit', $u->iduser) }}" class="text-blue-600 hover:underline mr-3">Edit</a>
-                <a href="{{ route('admin.data_user.reset', $u->iduser) }}"
+                <a href="{{ route('admin.data-user.edit', $u->iduser) }}" class="text-blue-600 hover:underline mr-3">Edit</a>
+                <a href="{{ route('admin.data-user.reset', $u->iduser) }}"
                    class="text-red-600 hover:underline"
                    onclick="return confirm('Reset password user ini ke 123456?')">Reset Password</a>
               </td>

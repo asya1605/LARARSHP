@@ -16,7 +16,7 @@ class RoleUserController extends Controller
         $users = User::with(['roles'])->orderBy('nama')->get();
         $roles = Role::orderBy('nama_role')->get();
 
-        return view('dashboard.admin.role_user.index', compact('users', 'roles'));
+        return view('dashboard.admin.role-user.index', compact('users', 'roles'));
     }
 
     // 🟡 Tambah / assign role
@@ -39,13 +39,13 @@ class RoleUserController extends Controller
         // Cek apakah user sudah punya role ini
         $user->roles()->syncWithoutDetaching([$role->idrole => ['status' => $isActive]]);
 
-        return redirect()->route('admin.role_user.index')->with('success', 'Role berhasil ditambahkan atau diperbarui.');
+        return redirect()->route('admin.role-user.index')->with('success', 'Role berhasil ditambahkan atau diperbarui.');
     }
 
     // 🟢 Konfirmasi Jadikan Aktif
     public function setActive($iduser, $idrole)
     {
-        return view('dashboard.admin.role_user.set_active', compact('iduser', 'idrole'));
+        return view('dashboard.admin.role-user.set_active', compact('iduser', 'idrole'));
     }
 
     public function setActiveConfirm(Request $request)
@@ -54,13 +54,13 @@ class RoleUserController extends Controller
         $user->roles()->updateExistingPivot($user->roles->pluck('idrole'), ['status' => 0]);
         $user->roles()->updateExistingPivot($request->idrole, ['status' => 1]);
 
-        return redirect()->route('admin.role_user.index')->with('success', 'Role berhasil dijadikan aktif.');
+        return redirect()->route('admin.role-user.index')->with('success', 'Role berhasil dijadikan aktif.');
     }
 
     // ⚫ Nonaktifkan
     public function deactivate($iduser, $idrole)
     {
-        return view('dashboard.admin.role_user.deactivate', compact('iduser', 'idrole'));
+        return view('dashboard.admin.role-user.deactivate', compact('iduser', 'idrole'));
     }
 
     public function deactivateConfirm(Request $request)
@@ -68,13 +68,13 @@ class RoleUserController extends Controller
         $user = User::findOrFail($request->iduser);
         $user->roles()->updateExistingPivot($request->idrole, ['status' => 0]);
 
-        return redirect()->route('admin.role_user.index')->with('info', 'Role berhasil dinonaktifkan.');
+        return redirect()->route('admin.role-user.index')->with('info', 'Role berhasil dinonaktifkan.');
     }
 
     // 🔴 Hapus Role
     public function destroy($iduser, $idrole)
     {
-        return view('dashboard.admin.role_user.destroy', compact('iduser', 'idrole'));
+        return view('dashboard.admin.role-user.destroy', compact('iduser', 'idrole'));
     }
 
     public function destroyConfirm(Request $request)
@@ -82,6 +82,6 @@ class RoleUserController extends Controller
         $user = User::findOrFail($request->iduser);
         $user->roles()->detach($request->idrole);
 
-        return redirect()->route('admin.role_user.index')->with('danger', 'Role berhasil dihapus dari user.');
+        return redirect()->route('admin.role-user.index')->with('danger', 'Role berhasil dihapus dari user.');
     }
 }
