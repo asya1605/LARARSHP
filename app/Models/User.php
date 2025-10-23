@@ -12,9 +12,15 @@ class User extends Model
 
     protected $fillable = ['nama', 'email', 'password'];
 
+    // One to One dengan Pemilik
+    public function pemilik()
+    {
+        return $this->hasOne(Pemilik::class, 'iduser', 'iduser');
+    }
+
+    // Many to Many dengan Role
     public function roles()
     {
-        // HAPUS withTimestamps() agar tidak nyari created_at/updated_at
         return $this->belongsToMany(Role::class, 'role_user', 'iduser', 'idrole')
                     ->withPivot('status');
     }

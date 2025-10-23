@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB; // ✅ Tambahkan ini
 use App\Models\User;
 use App\Models\Role;
 use App\Models\RoleUser;
@@ -65,10 +66,16 @@ class RoleUserController extends Controller
 
     public function deactivateConfirm(Request $request)
     {
-        $user = User::findOrFail($request->iduser);
-        $user->roles()->updateExistingPivot($request->idrole, ['status' => 0]);
+        // logika nonaktifkan role
+        $iduser = $request->iduser;
+        $idrole = $request->idrole;
 
-        return redirect()->route('admin.role-user.index')->with('info', 'Role berhasil dinonaktifkan.');
+        DB::table('role_user')
+            ->where('iduser', $iduser)
+            ->where('idrole', $idrole)
+            ->update(['status' => 0]);
+
+        return redirect()->route('admin.role-user.index')->with('success', 'Role berhasil dinonaktifkan.');
     }
 
     // 🔴 Hapus Role

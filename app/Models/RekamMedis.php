@@ -11,7 +11,6 @@ class RekamMedis extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'idreservasi_dokter',
         'idpet',
         'dokter_pemeriksa',
         'anamnesa',
@@ -20,15 +19,18 @@ class RekamMedis extends Model
         'created_at'
     ];
 
-    // Relasi ke pet
     public function pet()
     {
         return $this->belongsTo(Pet::class, 'idpet', 'idpet');
     }
 
-    // Relasi ke dokter (user)
     public function dokter()
     {
         return $this->belongsTo(User::class, 'dokter_pemeriksa', 'iduser');
+    }
+
+    public function detailRekamMedis()
+    {
+        return $this->hasMany(DetailRekamMedis::class, 'idrekam_medis', 'idrekam_medis');
     }
 }

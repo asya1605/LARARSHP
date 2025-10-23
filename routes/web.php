@@ -72,6 +72,7 @@ Route::prefix('admin/manajemen-role')->name('admin.role-user.')->group(function 
     Route::post('/store', [RoleUserController::class, 'store'])->name('store');
     Route::get('/set-active/{iduser}/{idrole}', [RoleUserController::class, 'setActive'])->name('setActive');
     Route::get('/deactivate/{iduser}/{idrole}', [RoleUserController::class, 'deactivate'])->name('deactivate');
+    Route::post('/deactivate-confirm', [RoleUserController::class, 'deactivateConfirm'])->name('deactivateConfirm'); // ✅ tambahkan ini
     Route::get('/destroy/{iduser}/{idrole}', [RoleUserController::class, 'destroy'])->name('destroy');
 });
 

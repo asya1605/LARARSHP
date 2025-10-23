@@ -39,26 +39,5 @@
         Kelola data dan pantau aktivitas sistem dengan mudah melalui menu di atas.
       </p>
     </div>
-
-    {{-- QUICK INFO CARDS --}}
-    <div class="grid md:grid-cols-3 gap-6 mt-14">
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition">
-        <div class="text-3xl mb-3">👥</div>
-        <h3 class="font-semibold text-lg text-[#002080]">Data User</h3>
-        <p class="text-sm text-gray-600 mt-1">Kelola akun pengguna sistem RSHP.</p>
-      </div>
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition">
-        <div class="text-3xl mb-3">🐾</div>
-        <h3 class="font-semibold text-lg text-[#002080]">Data Hewan</h3>
-        <p class="text-sm text-gray-600 mt-1">Atur jenis, ras, dan data medis hewan.</p>
-      </div>
-      <div class="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition">
-        <div class="text-3xl mb-3">🧾</div>
-        <h3 class="font-semibold text-lg text-[#002080]">Laporan</h3>
-        <p class="text-sm text-gray-600 mt-1">Pantau statistik dan laporan RSHP.</p>
-      </div>
-    </div>
-  </div>
-
 </section>
 @endsection

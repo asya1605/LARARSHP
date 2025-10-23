@@ -11,4 +11,9 @@ class JenisHewan extends Model
     public $timestamps = false;
 
     protected $fillable = ['nama_jenis_hewan'];
+
+    public function ras()
+    {
+        return $this->hasMany(RasHewan::class, 'idjenis_hewan', 'idjenis_hewan');
+    }
 }

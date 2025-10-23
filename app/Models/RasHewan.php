@@ -1,80 +1,24 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Models;
 
-use App\Http\Controllers\Controller;
-use App\Models\RasHewan;
-use App\Models\JenisHewan;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 
-class RasHewanController extends Controller
+class RasHewan extends Model
 {
-    public function index()
-    {
-        $rasList = RasHewan::with('jenis')
-                    ->orderBy('idjenis_hewan')
-                    ->orderBy('nama_ras')
-                    ->get();
+    protected $table = 'ras_hewan';
+    protected $primaryKey = 'idras_hewan';
+    public $timestamps = false;
 
-        return view('dashboard.admin.ras-hewan.index', compact('rasList'));
+    protected $fillable = ['nama_ras', 'idjenis_hewan'];
+
+    public function jenis()
+    {
+        return $this->belongsTo(JenisHewan::class, 'idjenis_hewan', 'idjenis_hewan');
     }
 
-    public function create()
+    public function pets()
     {
-        $jenisList = JenisHewan::orderBy('nama_jenis_hewan')->get();
-        return view('dashboard.admin.ras-hewan.create', compact('jenisList'));
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama_ras' => 'required|string|max:100',
-            'idjenis_hewan' => 'required|integer|exists:jenis_hewan,idjenis_hewan',
-        ]);
-
-        RasHewan::create([
-            'nama_ras' => $request->nama_ras,
-            'idjenis_hewan' => $request->idjenis_hewan,
-        ]);
-
-        return redirect()->route('admin.ras-hewan.index')
-                         ->with('success', 'Ras hewan berhasil ditambahkan.');
-    }
-
-    public function edit($id)
-    {
-        $ras = RasHewan::findOrFail($id);
-        $jenisList = JenisHewan::orderBy('nama_jenis_hewan')->get();
-        return view('dashboard.admin.ras-hewan.edit', compact('ras', 'jenisList'));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nama_ras' => 'required|string|max:100',
-            'idjenis_hewan' => 'required|integer|exists:jenis_hewan,idjenis_hewan',
-        ]);
-
-        RasHewan::where('idras_hewan', $id)->update([
-            'nama_ras' => $request->nama_ras,
-            'idjenis_hewan' => $request->idjenis_hewan,
-        ]);
-
-        return redirect()->route('admin.ras-hewan.index')
-                         ->with('success', 'Data ras hewan berhasil diperbarui.');
-    }
-
-    public function destroy($id)
-    {
-        $used = DB::table('pet')->where('idras_hewan', $id)->exists();
-        if ($used) {
-            return redirect()->route('admin.ras-hewan.index')
-                             ->with('danger', 'Tidak dapat menghapus ras: masih digunakan pada data hewan.');
-        }
-
-        RasHewan::where('idras_hewan', $id)->delete();
-        return redirect()->route('admin.ras-hewan.index')
-                         ->with('success', 'Ras hewan berhasil dihapus.');
+        return $this->hasMany(Pet::class, 'idras_hewan', 'idras_hewan');
     }
 }

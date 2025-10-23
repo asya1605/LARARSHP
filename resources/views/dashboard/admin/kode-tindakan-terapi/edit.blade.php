@@ -7,7 +7,7 @@
   <div class="bg-white shadow-md rounded-xl p-8 w-full max-w-3xl border border-gray-200">
     <h2 class="text-lg font-bold text-[#002080] mb-4 text-center">✏️ Edit Kode Tindakan Terapi</h2>
 
-    <form method="POST" action="{{ route('admin.kode-tindakan.update', $item->idkode_tindakan_terapi) }}" class="grid md:grid-cols-2 gap-4">
+<form method="POST" action="{{ route('admin.kode-tindakan-terapi.update', $item->idkode_tindakan_terapi) }}" class="grid md:grid-cols-2 gap-4">
       @csrf
       @method('PUT')
 
@@ -44,7 +44,7 @@
       </div>
 
       <div class="md:col-span-2 flex justify-between mt-4">
-        <a href="{{ route('admin.kode-tindakan.index') }}" class="text-gray-600 hover:text-gray-800 text-sm">← Batal</a>
+        <a href="{{ route('admin.kode-tindakan-terapi.index') }}" class="text-gray-600 hover:text-gray-800 text-sm">← Batal</a>
         <button type="submit" class="bg-[#002080] hover:bg-[#00185e] text-white px-4 py-2 rounded text-sm font-medium">
           Simpan Perubahan
         </button>
