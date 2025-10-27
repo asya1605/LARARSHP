@@ -2,26 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class User extends Model
+class User extends Authenticatable
 {
+    use Notifiable;
+
     protected $table = 'user';
     protected $primaryKey = 'iduser';
     public $timestamps = false;
 
     protected $fillable = ['nama', 'email', 'password'];
 
-    // One to One dengan Pemilik
-    public function pemilik()
-    {
-        return $this->hasOne(Pemilik::class, 'iduser', 'iduser');
-    }
-
-    // Many to Many dengan Role
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_user', 'iduser', 'idrole')
                     ->withPivot('status');
     }
 }
+    

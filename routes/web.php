@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\DataUserController;
 use App\Http\Controllers\Admin\RoleUserController;
 use App\Http\Controllers\CekKoneksiController;
@@ -11,150 +12,76 @@ use App\Http\Controllers\Admin\RasHewanController;
 use App\Http\Controllers\Admin\PemilikController;
 use App\Http\Controllers\Admin\PetController;
 use App\Http\Controllers\Admin\KategoriController;
-use App\Http\Controllers\Admin\KategoriKlinisController;    
+use App\Http\Controllers\Admin\KategoriKlinisController;
 use App\Http\Controllers\Admin\KodeTindakanTerapiController;
 use App\Http\Controllers\Admin\RekamMedisController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-| Semua route utama web untuk project RSHP UNAIR
-|--------------------------------------------------------------------------
-*/
-
-// 🔹 Redirect root ke halaman home
+// Redirect root ke /home
 Route::get('/', fn() => redirect()->route('home'));
 
-// 🔹 Halaman publik (non-dashboard)
-Route::get('/home', [SiteController::class, 'home'])->name('home');
-Route::get('/struktur', [SiteController::class, 'struktur'])->name('struktur');
-Route::get('/layanan', [SiteController::class, 'layanan'])->name('layanan');
-Route::get('/lokasi', [SiteController::class, 'lokasi'])->name('lokasi');
-Route::get('/visi', [SiteController::class, 'visi'])->name('visi');
-Route::get('/jadwal', [SiteController::class, 'jadwal'])->name('jadwal');
-
-// 🔹 Auth (Login, Register, Logout)
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
-Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.post');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-
-// 🔹 Dashboard utama & per role
-Route::prefix('dashboard')->group(function () {
-    Route::get('/', fn() => view('dashboard.index'))->name('dashboard');
-    Route::get('/admin', fn() => view('dashboard.admin.index'))->name('dashboard.admin');
-    Route::get('/admin/data-master', fn() => view('dashboard.admin.data_master'))->name('dashboard.admin.data');
-
-    Route::get('/dokter', fn() => view('dashboard.dokter.index'))->name('dashboard.dokter');
-    Route::get('/perawat', fn() => view('dashboard.perawat.index'))->name('dashboard.perawat');
-    Route::get('/pemilik', fn() => view('dashboard.pemilik.index'))->name('dashboard.pemilik');
+// Halaman publik
+Route::controller(SiteController::class)->group(function () {
+    Route::get('/home', 'home')->name('home');
+    Route::get('/struktur', 'struktur')->name('struktur');
+    Route::get('/layanan', 'layanan')->name('layanan');
+    Route::get('/lokasi', 'lokasi')->name('lokasi');
+    Route::get('/visi', 'visi')->name('visi');
+    Route::get('/jadwal', 'jadwal')->name('jadwal');
 });
 
-// =====================================================
-// 🔹 ADMIN ROUTES (Data Master & CRUD)
-// =====================================================
+// ================= AUTH ===================
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// ✅ Data User
-Route::prefix('admin/data-user')->name('admin.data-user.')->group(function () {
-    Route::get('/', [DataUserController::class, 'index'])->name('index');
-    Route::get('/create', [DataUserController::class, 'create'])->name('create');
-    Route::post('/store', [DataUserController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [DataUserController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [DataUserController::class, 'update'])->name('update');
-    Route::get('/reset/{id}', [DataUserController::class, 'reset'])->name('reset');
+// ================= DASHBOARD =================
+Route::prefix('dashboard')->middleware('auth')->group(function () {
+
+    // Halaman umum dashboard
+    Route::get('/', fn() => view('dashboard.index'))
+        ->name('dashboard');
+
+    // Administrator
+    Route::get('/admin', fn() => view('dashboard.admin.index'))
+        ->middleware('role:administrator')
+        ->name('dashboard.admin');
+
+    Route::get('/admin/data-master', fn() => view('dashboard.admin.data_master'))
+        ->middleware('role:administrator')
+        ->name('dashboard.admin.data');
+
+    // Dokter
+    Route::get('/dokter', fn() => view('dashboard.dokter.index'))
+        ->middleware('role:dokter')
+        ->name('dashboard.dokter');
+
+    // Perawat
+    Route::get('/perawat', fn() => view('dashboard.perawat.index'))
+        ->middleware('role:perawat')
+        ->name('dashboard.perawat');
+
+    // Pemilik
+    Route::get('/pemilik', fn() => view('dashboard.pemilik.index'))
+        ->middleware('role:pemilik')
+        ->name('dashboard.pemilik');
 });
 
-// ✅ Role User
-Route::prefix('admin/manajemen-role')->name('admin.role-user.')->group(function () {
-    Route::get('/', [RoleUserController::class, 'index'])->name('index');
-    Route::post('/store', [RoleUserController::class, 'store'])->name('store');
-    Route::get('/set-active/{iduser}/{idrole}', [RoleUserController::class, 'setActive'])->name('setActive');
-    Route::get('/deactivate/{iduser}/{idrole}', [RoleUserController::class, 'deactivate'])->name('deactivate');
-    Route::post('/deactivate-confirm', [RoleUserController::class, 'deactivateConfirm'])->name('deactivateConfirm'); // ✅ tambahkan ini
-    Route::get('/destroy/{iduser}/{idrole}', [RoleUserController::class, 'destroy'])->name('destroy');
+// ================= ADMIN CRUD =================
+Route::middleware(['auth', 'role:administrator'])->prefix('admin')->group(function () {
+    Route::resource('data-user', DataUserController::class)->names('admin.data-user');
+    Route::resource('manajemen-role', RoleUserController::class)->names('admin.role-user');
+    Route::resource('jenis-hewan', JenisHewanController::class)->names('admin.jenis-hewan');
+    Route::resource('ras-hewan', RasHewanController::class)->names('admin.ras-hewan');
+    Route::resource('pemilik', PemilikController::class)->names('admin.pemilik');
+    Route::resource('pet', PetController::class)->names('admin.pet');
+    Route::resource('kategori', KategoriController::class)->names('admin.kategori');
+    Route::resource('kategori-klinis', KategoriKlinisController::class)->names('admin.kategori-klinis');
+    Route::resource('kode-tindakan-terapi', KodeTindakanTerapiController::class)->names('admin.kode-tindakan-terapi');
+    Route::resource('rekam-medis', RekamMedisController::class)->names('admin.rekam-medis');
 });
 
-// ✅ Jenis Hewan
-Route::prefix('admin/jenis-hewan')->name('admin.jenis-hewan.')->group(function () {
-    Route::get('/', [JenisHewanController::class, 'index'])->name('index');
-    Route::get('/create', [JenisHewanController::class, 'create'])->name('create');
-    Route::post('/store', [JenisHewanController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [JenisHewanController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [JenisHewanController::class, 'update'])->name('update');
-    Route::get('/destroy/{id}', [JenisHewanController::class, 'destroy'])->name('destroy');
-});
-
-// ✅ Ras Hewan
-Route::prefix('admin/ras-hewan')->name('admin.ras-hewan.')->group(function () {
-    Route::get('/', [RasHewanController::class, 'index'])->name('index');
-    Route::get('/create', [RasHewanController::class, 'create'])->name('create');
-    Route::post('/store', [RasHewanController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [RasHewanController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [RasHewanController::class, 'update'])->name('update');
-    Route::get('/destroy/{id}', [RasHewanController::class, 'destroy'])->name('destroy');
-});
-
-// ✅ Data Pemilik (pakai nama admin.pemilik.*)
-Route::prefix('admin/pemilik')->name('admin.pemilik.')->group(function () {
-    Route::get('/', [PemilikController::class, 'index'])->name('index');
-    Route::get('/create', [PemilikController::class, 'create'])->name('create');
-    Route::post('/store', [PemilikController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [PemilikController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [PemilikController::class, 'update'])->name('update');
-    Route::get('/destroy/{id}', [PemilikController::class, 'destroy'])->name('destroy');
-});
-
-// ✅ Data Pet (pakai nama admin.pet.*)
-Route::prefix('admin/pet')->name('admin.pet.')->group(function () {
-    Route::get('/', [PetController::class, 'index'])->name('index');
-    Route::get('/create', [PetController::class, 'create'])->name('create');
-    Route::post('/store', [PetController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [PetController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [PetController::class, 'update'])->name('update');
-    Route::get('/destroy/{id}', [PetController::class, 'destroy'])->name('destroy');
-});
-
-// Data Kategori
-Route::prefix('admin/kategori')->name('admin.kategori.')->group(function () {
-    Route::get('/', [KategoriController::class, 'index'])->name('index');
-    Route::get('/create', [KategoriController::class, 'create'])->name('create');
-    Route::post('/store', [KategoriController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [KategoriController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [KategoriController::class, 'update'])->name('update');
-    Route::get('/destroy/{id}', [KategoriController::class, 'destroy'])->name('destroy');
-});
-
-// Data Kategori Klinis
-Route::prefix('admin/kategori-klinis')->name('admin.kategori-klinis.')->group(function () {
-    Route::get('/', [KategoriKlinisController::class, 'index'])->name('index');
-    Route::get('/create', [KategoriKlinisController::class, 'create'])->name('create');
-    Route::post('/store', [KategoriKlinisController::class, 'store'])->name('store');
-    Route::get('/edit/{id}', [KategoriKlinisController::class, 'edit'])->name('edit');
-    Route::post('/update/{id}', [KategoriKlinisController::class, 'update'])->name('update');
-    Route::get('/destroy/{id}', [KategoriKlinisController::class, 'destroy'])->name('destroy');
-});
-
-Route::prefix('admin/kode-tindakan-terapi')->name('admin.kode-tindakan-terapi.')->group(function () {
-    Route::get('/', [KodeTindakanTerapiController::class, 'index'])->name('index');
-    Route::get('/create', [KodeTindakanTerapiController::class, 'create'])->name('create');
-    Route::post('/store', [KodeTindakanTerapiController::class, 'store'])->name('store');
-    Route::get('/{id}/edit', [KodeTindakanTerapiController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [KodeTindakanTerapiController::class, 'update'])->name('update');
-    Route::delete('/{id}', [KodeTindakanTerapiController::class, 'destroy'])->name('destroy');
-});
-
-    // --- Data Master: Rekam Medis ---
-Route::prefix('admin/rekam-medis')->name('admin.rekam-medis.')->group(function () {
-    Route::get('/', [RekamMedisController::class, 'index'])->name('index');
-    Route::get('/create', [RekamMedisController::class, 'create'])->name('create');
-    Route::post('/store', [RekamMedisController::class, 'store'])->name('store');
-    Route::get('/{id}/edit', [RekamMedisController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [RekamMedisController::class, 'update'])->name('update');
-    Route::delete('/{id}', [RekamMedisController::class, 'destroy'])->name('destroy');
-});
-
-// 🔹 Cek koneksi database & data
+// ================= UTILITAS =================
 Route::get('/cek-koneksi', [CekKoneksiController::class, 'index'])->name('cek.koneksi');
 Route::get('/cek-data', [CekKoneksiController::class, 'data'])->name('cek.data');

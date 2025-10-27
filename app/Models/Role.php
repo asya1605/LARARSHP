@@ -18,3 +18,4 @@ class Role extends Model
                     ->withPivot('status');
     }
 }
+    
